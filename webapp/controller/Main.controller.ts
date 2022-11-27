@@ -1,36 +1,33 @@
 import BaseController from './BaseController';
-import Text from 'sap/m/Text';
-import Input from 'sap/m/Input';
 
-import { createEffect, createSignal } from '../lib/fluid';
+import { bindUI5ModelProperty, createEffect, createSignal } from '../lib/fluid';
 import JSONModel from 'sap/ui/model/json/JSONModel';
-import getPropertyHelper, { PropertyHelper } from '../lib/getPropertyHelper';
-
-const model = {
-	firstName: '',
-	lastName: '',
-	greeting: '',
-};
 
 /**
  * @namespace test.ui5solid.controller
  */
 export default class Main extends BaseController {
-	private oModel: null | JSONModel = null;
+	private model: JSONModel = null;
 
 	private firstName = createSignal('');
 	private lastName = createSignal('');
-
-	private propertyHelper: null | PropertyHelper<typeof model> = null;
+	private greeting = createSignal('');
 
 	onInit() {
 		// Model
-		this.oModel = new JSONModel(model);
-		this.getView().setModel(this.oModel);
-		this.propertyHelper = getPropertyHelper(model);
+		this.model = new JSONModel({});
+		this.getView().setModel(this.model);
+
+		// Bind Properties
+		bindUI5ModelProperty(this.model, '/firstName', this.firstName);
+		bindUI5ModelProperty(this.model, '/lastName', this.lastName);
+		bindUI5ModelProperty(this.model, '/greeting', this.greeting);
+
+		// Derive State
+		createEffect(() => this.greeting.set(`Hi ${this.firstName.get()}, ${this.lastName.get()}`));
 	}
 
 	onDebug() {
-		const test = this.propertyHelper(this.oModel, 'firstName');
+		console.log(this.model.getProperty('/greeting'));
 	}
 }

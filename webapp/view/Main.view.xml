@@ -3,16 +3,16 @@
 	xmlns:mvc="sap.ui.core.mvc">
 	<VBox class="sapUiContentPadding" width="100%">
 		<VBox class="sapUiSmallMargin">
-			<Text id="greetingText" text="test" />
+			<Text id="greetingText" text="{/firstName}" />
 		</VBox>
 
 		<VBox class="sapUiSmallMargin">
 			<Label text="First Name" labelFor="firstNameInput" />
-			<Input id="firstNameInput" placeholder="Enter your first name" showSuggestion="false" />
+			<Input id="firstNameInput" placeholder="Enter your first name" value="{/firstName}" valueLiveUpdate="true" showSuggestion="false" />
 		</VBox>
 		<VBox class="sapUiSmallMargin">
 			<Label text="Last Name" labelFor="lastNameInput" />
-			<Input id="lastNameInput" placeholder="Enter your last name" showSuggestion="false" />
+			<Input id="lastNameInput" placeholder="Enter your last name" value="{/lastName}" valueLiveUpdate="true" showSuggestion="false" />
 		</VBox>
 
 		<VBox class="sapUiSmallMargin">
