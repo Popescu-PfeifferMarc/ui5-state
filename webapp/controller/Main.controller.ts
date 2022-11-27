@@ -2,29 +2,35 @@ import BaseController from './BaseController';
 import Text from 'sap/m/Text';
 import Input from 'sap/m/Input';
 
-import { createEffect, createSignal, bindUI5InputValue } from '../lib/fluid';
+import { createEffect, createSignal } from '../lib/fluid';
+import JSONModel from 'sap/ui/model/json/JSONModel';
+import getPropertyHelper, { PropertyHelper } from '../lib/getPropertyHelper';
+
+const model = {
+	firstName: '',
+	lastName: '',
+	greeting: '',
+};
 
 /**
  * @namespace test.ui5solid.controller
  */
 export default class Main extends BaseController {
+	private oModel: null | JSONModel = null;
+
 	private firstName = createSignal('');
 	private lastName = createSignal('');
 
-	onInit() {
-		// Input
-		bindUI5InputValue(super.byId<Input>('firstNameInput'), this.firstName);
-		bindUI5InputValue(super.byId<Input>('lastNameInput'), this.lastName);
+	private propertyHelper: null | PropertyHelper<typeof model> = null;
 
-		// Text Output
-		createEffect(() =>
-			super.byId<Text>('greetingText').setText(`Hello ${this.firstName.get()} ${this.lastName.get()}`)
-		);
+	onInit() {
+		// Model
+		this.oModel = new JSONModel(model);
+		this.getView().setModel(this.oModel);
+		this.propertyHelper = getPropertyHelper(model);
 	}
 
 	onDebug() {
-		console.log(this.firstName.get());
-		this.firstName.set('foobar');
-		console.log(this.firstName.get());
+		const test = this.propertyHelper(this.oModel, 'firstName');
 	}
 }
