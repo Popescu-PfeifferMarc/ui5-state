@@ -1,0 +1,22 @@
+<mvc:View controllerName="test.ui5solid.controller.Main" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+	<VBox class="sapUiContentPadding" width="100%">
+		<VBox class="sapUiSmallMargin">
+			<Text id="greetingText" text="test" />
+		</VBox>
+
+		<VBox class="sapUiSmallMargin">
+			<Label text="First Name" labelFor="firstNameInput" />
+			<Input id="firstNameInput" placeholder="Enter your first name" showSuggestion="false" />
+		</VBox>
+		<VBox class="sapUiSmallMargin">
+			<Label text="Last Name" labelFor="lastNameInput" />
+			<Input id="lastNameInput" placeholder="Enter your last name" showSuggestion="false" />
+		</VBox>
+
+		<VBox class="sapUiSmallMargin">
+			<Button press="onDebug" text="Debug Button" />
+		</VBox>
+	</VBox>
+</mvc:View>
