@@ -13,15 +13,12 @@ export default class Main extends BaseController {
 
 	onInit() {
 		// Input
-		const firstNameInputElement = this.getView().byId('firstNameInput') as Input;
-		bindUI5InputValue(firstNameInputElement, this.firstName);
-		const lastNameInputElement = this.getView().byId('lastNameInput') as Input;
-		bindUI5InputValue(lastNameInputElement, this.lastName);
+		bindUI5InputValue(super.byId<Input>('firstNameInput'), this.firstName);
+		bindUI5InputValue(super.byId<Input>('lastNameInput'), this.lastName);
 
 		// Text Output
-		const greetingTextElement = this.getView().byId('greetingText') as Text;
 		createEffect(() =>
-			greetingTextElement.setText(`Hello ${this.firstName.get()} ${this.lastName.get()}`)
+			super.byId<Text>('greetingText').setText(`Hello ${this.firstName.get()} ${this.lastName.get()}`)
 		);
 	}
 

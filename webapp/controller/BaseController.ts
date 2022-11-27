@@ -11,6 +11,10 @@ import History from 'sap/ui/core/routing/History';
  * @namespace test.ui5solid.controller
  */
 export default abstract class BaseController extends Controller {
+	public byId<T>(sId: string): T {
+		return this.getView().byId(sId) as T;
+	}
+
 	/**
 	 * Convenience method for accessing the component of the controller's view.
 	 * @returns The component of the controller's view
