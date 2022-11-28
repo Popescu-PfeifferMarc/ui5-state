@@ -22,34 +22,34 @@ export function createEffect(fn: () => unknown) {
 }
 
 export type Signal<T> = {
-	readonly get: () => T;
+	(): T;
 	readonly set: (nextValue: T) => void;
 };
 
-export function createSignal<T>(value: T): Signal<T> {
+export function createSignal<T>(value: T) {
 	const subscribers = new Set<() => void>();
 
-	const get = () => {
+	let signal: { (): T; set?: (nextValue: T) => void; } = () => {
 		const current = getCurrentObserver();
 		if (current) subscribers.add(current);
 		return value;
 	};
 
-	const set = (nextValue: T) => {
+	signal.set = (nextValue: T) => {
 		value = nextValue;
 		for (const sub of subscribers) {
 			sub();
 		}
 	};
 
-	return { get, set } as const;
+	return signal as Signal<T>;
 }
 // #endregion Primitives
 
 // #region UI5 Helpers
 export function bindUI5InputValue(inputElement: Input, signal: Signal<string>) {
-	inputElement.setValue(signal.get());
-	createEffect(() => inputElement.setValue(signal.get()));
+	inputElement.setValue(signal());
+	createEffect(() => inputElement.setValue(signal()));
 	inputElement.attachLiveChange((event: Event) => signal.set(`${event.getParameter('value') as string}`));
 }
 // #endregion UI5 Helpers

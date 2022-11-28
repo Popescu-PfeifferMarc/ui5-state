@@ -18,13 +18,13 @@ export default class Main extends BaseController {
 
 		// Text Output
 		createEffect(() =>
-			super.byId<Text>('greetingText').setText(`Hello ${this.firstName.get()} ${this.lastName.get()}`)
+			super.byId<Text>('greetingText').setText(`Hello ${this.firstName()} ${this.lastName()}`)
 		);
 	}
 
 	onDebug() {
-		console.log(this.firstName.get());
+		console.log(this.firstName());
 		this.firstName.set('foobar');
-		console.log(this.firstName.get());
+		console.log(this.firstName());
 	}
 }

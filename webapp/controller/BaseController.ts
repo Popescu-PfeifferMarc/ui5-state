@@ -12,7 +12,7 @@ import History from 'sap/ui/core/routing/History';
  */
 export default abstract class BaseController extends Controller {
 	public byId<T>(sId: string): T {
-		return this.getView().byId(sId) as T;
+		return super.getView().byId(sId) as T;
 	}
 
 	/**
